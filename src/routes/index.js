@@ -5,14 +5,13 @@ const { Router } = require("express");
 const router = Router();
 const axios = require("axios");
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
 //---llamado de DB~~~~~~~~~~~~~~~~~~~~~~~~~~
 // const { Pokemon } = require("../db");
 //---fi llamado de DB~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //---funciones~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //---fin funciones~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 //---Rutas~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // router.get("/rutax/:id", async (req, res) => {
 //   const { name } = req.query;
@@ -21,6 +20,16 @@ const axios = require("axios");
 //   const typeApi = await axios.get("http//urlEndT");
 // });
 
+router.get("/", async (req, res) => {
+  const { name } = req.query;
+  return res.status(200).send("hola mundo");
+
+  if (name) {
+  } else {
+    // res.status(200).send(pokeTotal);
+    res.status(200).send(pokeTotal);
+  }
+});
 //---fin Rutas~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 module.exports = router;
