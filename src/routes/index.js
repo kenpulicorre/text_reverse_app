@@ -1,15 +1,22 @@
 const { Router } = require("express");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
+const fs = require("fs");
 
 const router = Router();
 const axios = require("axios");
 
 //---llamado de DB~~~~~~~~~~~~~~~~~~~~~~~~~~
-// const { Pokemon } = require("../db");
+const { Principal } = require("../db");
+const { conn } = require("../db.js"); //dabase
+
 //---fi llamado de DB~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //---funciones~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+function reverse(texto) {
+  return texto.split("").reverse().join("");
+}
+
 //---fin funciones~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //---Rutas~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -29,6 +36,70 @@ router.get("/", async (req, res) => {
     // res.status(200).send(pokeTotal);
     res.status(200).send(pokeTotal);
   }
+});
+
+router.get("/kenneth", async (req, res) => {
+  let newPokemon = await Principal.create({
+    name: "diego puliche",
+  });
+  const { name } = req.query;
+  return res.json({ nombre: "kenneth", apelido: "puliche" });
+
+  if (name) {
+  } else {
+    // res.status(200).send(pokeTotal);
+    res.status(200).send(pokeTotal);
+  }
+});
+
+router.get("/ping", async (req, res) => {
+  const result = await conn.Sequelize;
+  console.log(result.default);
+  const arrInfo = await Principal.findAll({});
+
+  // try {
+  //   const result = await conn.Sequelize;
+  //   console.log(result.query("SELECT * FROM principals;"));
+
+  //   res.send({ mensaje: result });
+  // } catch (error) {
+  res.send({ mensaje: arrInfo });
+  // }
+});
+
+router.get("/texto", async (req, res) => {
+  //GET /iecho?text=test
+
+  const { text } = req.query;
+  let textLower = text.toLowerCase();
+  let alfabetico = /^[a-z]+$/;
+  let textOk = alfabetico.test(textLower);
+  let texto_invertido = reverse(textLower);
+  let palindrome;
+  console.log("textOk: ", textOk);
+  console.log("texto_invertido: ", texto_invertido);
+  if (texto_invertido === textLower) {
+    palindrome = true;
+  }
+  // "palindrome": true
+
+  let newText = await Principal.create({
+    name: text,
+  });
+
+  if (!textOk) {
+    return res.status(400).json({ error: "no text" });
+  } else {
+    if (palindrome) {
+      return res.status(200).json({ text: texto_invertido, palindrome: true });
+    } else {
+      return res.status(200).json({ text: texto_invertido });
+    }
+  }
+});
+
+router.get("/pruebat", (req, res) => {
+  return res.json("hola mundo");
 });
 //---fin Rutas~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

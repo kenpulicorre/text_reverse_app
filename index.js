@@ -22,11 +22,11 @@ const { conn } = require("./src/db.js");
 
 // // Syncing all the models at once.
 
-// conn.sync({ force: true }).then(() => {
-//   server.listen(3001, () => {
-//     console.log('%s listening at 3001'); // eslint-disable-line no-console
-//   });
-// });
+conn.sync({ force: true }).then(() => {
+  server.listen(process.env.PORT || 3002, () => {
+    console.log("%s listening at 3002", process.env.PORT || 3002); // eslint-disable-line no-console
+  });
+});
 
-server.listen(process.env.PORT || 3002);
-console.log("Server on port", process.env.PORT || 3002);
+// server.listen(process.env.PORT || 3002);
+// console.log("Server on port", process.env.PORT || 3002);
