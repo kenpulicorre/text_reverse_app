@@ -8,5 +8,13 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    nameReverse: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    palindrome: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+    },
   });
 };

@@ -75,7 +75,7 @@ router.get("/texto", async (req, res) => {
   let alfabetico = /^[a-z]+$/;
   let textOk = alfabetico.test(textLower);
   let texto_invertido = reverse(textLower);
-  let palindrome;
+  let palindrome = false;
   console.log("textOk: ", textOk);
   console.log("texto_invertido: ", texto_invertido);
   if (texto_invertido === textLower) {
@@ -83,19 +83,38 @@ router.get("/texto", async (req, res) => {
   }
   // "palindrome": true
 
-  let newText = await Principal.create({
-    name: text,
-  });
-
   if (!textOk) {
     return res.status(400).json({ error: "no text" });
   } else {
     if (palindrome) {
+      let newText = await Principal.create({
+        name: text,
+        nameReverse: texto_invertido,
+        palindrome: palindrome,
+      });
       return res.status(200).json({ text: texto_invertido, palindrome: true });
     } else {
+      let newText = await Principal.create({
+        name: text,
+        nameReverse: texto_invertido,
+        palindrome: palindrome,
+      });
       return res.status(200).json({ text: texto_invertido });
     }
   }
+});
+router.get("/textos", async (req, res) => {
+  const arrInfo = await Principal.findAll({});
+  return res.status(200).send(arrInfo);
+});
+
+router.delete("/borrar", async (req, res) => {
+  let dataDb = await Principal.destroy({
+    where: {},
+    truncate: true,
+  });
+  //  return countryDb;
+  res.send([]);
 });
 
 router.get("/pruebat", (req, res) => {
