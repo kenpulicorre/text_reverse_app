@@ -57,14 +57,7 @@ router.get("/ping", async (req, res) => {
   console.log(result.default);
   const arrInfo = await Principal.findAll({});
 
-  // try {
-  //   const result = await conn.Sequelize;
-  //   console.log(result.query("SELECT * FROM principals;"));
-
-  //   res.send({ mensaje: result });
-  // } catch (error) {
   res.send({ mensaje: arrInfo });
-  // }
 });
 
 router.get("/texto", async (req, res) => {
